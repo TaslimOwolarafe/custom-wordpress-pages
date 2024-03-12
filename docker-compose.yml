@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+
+  wordpress_mobile:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: taslim
+      WORDPRESS_DB_PASSWORD: taslim
+      WORDPRESS_DB_NAME: taslimdb
+      WORDPRESS_TABLE_PREFIX: mobile_
+    volumes:
+      - ./wordpress_mobile_data:/var/www/html
+  wordpress_desktop:
+    image: wordpress
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: taslim
+      WORDPRESS_DB_PASSWORD: taslim
+      WORDPRESS_DB_NAME: taslimdb
+      WORDPRESS_TABLE_PREFIX: desktop_
+    volumes:
+      - ./wordpress_desktop_data:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: taslimdb
+      MYSQL_USER: taslim
+      MYSQL_PASSWORD: taslim
+      MYSQL_RANDOM_ROOT_PASSWORD: '1111'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress1:
+  wordpress2:
+  db:
